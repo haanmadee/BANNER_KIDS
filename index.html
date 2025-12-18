@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Kids - 3D Showcase</title>
+    <style>
+        :root {
+            --navy: #18375d;
+            --cream: #fdfbf7;
+            --accent: #f4d03f;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--cream);
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+            color: var(--navy);
+        }
+
+        /* Hero Container */
+        .hero-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .header-text {
+            margin-bottom: 50px;
+            z-index: 10;
+        }
+
+        .header-text h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        /* --- STAGE 3D --- */
+        .stage {
+            width: 250px;
+            height: 350px;
+            perspective: 1200px; /* Memberi efek kedalaman */
+            position: relative;
+        }
+
+        /* Kontainer yang Berputar */
+        .carousel {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            animation: rotateCarousel 15s infinite linear; /* Efek Muter Otomatis */
+        }
+
+        /* Style Setiap Kartu/Gambar Produk */
+        .item {
+            position: absolute;
+            width: 220px;
+            height: 300px;
+            left: 15px;
+            top: 25px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(24, 55, 93, 0.2);
+            display: flex;
+            flex-direction: column;
+            border: 2px solid white;
+            backface-visibility: visible;
+        }
+
+        .item img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+        }
+
+        .item .desc {
+            padding: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background: white;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- POSISI 3D (Melingkar) --- 
+           Kita punya 5 item, jadi 360/5 = 72 derajat per item
+           translateZ menentukan seberapa jauh kartu dari pusat putaran
+        */
+        .item:nth-child(1) { transform: rotateY(0deg) translateZ(250px); }
+        .item:nth-child(2) { transform: rotateY(72deg) translateZ(250px); }
+        .item:nth-child(3) { transform: rotateY(144deg) translateZ(250px); }
+        .item:nth-child(4) { transform: rotateY(216deg) translateZ(250px); }
+        .item:nth-child(5) { transform: rotateY(288deg) translateZ(250px); }
+
+        /* Animasi Putar */
+        @keyframes rotateCarousel {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        /* Button CTA */
+        .cta-box {
+            margin-top: 60px;
+        }
+
+        .btn {
+            background: var(--navy);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 10px 20px rgba(24, 55, 93, 0.3);
+        }
+
+        /* Efek Hover: Berhenti muter kalau disentuh */
+        .stage:hover .carousel {
+            animation-play-state: paused;
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 480px) {
+            .stage {
+                transform: scale(0.8); /* Kecilin dikit buat layar mungil */
+            }
+            .header-text h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-container">
+        
+        <div class="header-text">
+            <h1>Koleksi Belajar <span style="color: #18375d; border-bottom: 3px solid #f4d03f;">Si Kecil</span></h1>
+            <p>Sentuh kartu untuk berhenti berputar</p>
+        </div>
+
+        <div class="stage">
+            <div class="carousel">
+                
+                <div class="item">
+                    <img src="https://placehold.co/400x500/18375d/white?text=Poster+Animal" alt="Poster Animal">
+                    <div class="desc">6 Poster Animal Aesthetic</div>
+                </div>
+
+                <div class="item">
+                    <img src="https://placehold.co/400x500/f4d03f/18375d?text=Flashcards" alt="Flashcards">
+                    <div class="desc">26 Kartu Huruf Alphabet</div>
+                </div>
+
+                <div class="item">
+                    <img src="https://placehold.co/400x500/e3effd/18375d?text=Worksheet" alt="Worksheet">
+                    <div class="desc">1300+ Hal Worksheet Cerdas</div>
+                </div>
+
+                <div class="item">
+                    <img src="https://placehold.co/400x500/ff6b6b/white?text=Angka+1-10" alt="Flashcards Angka">
+                    <div class="desc">Kartu Angka 1-10 Estetik</div>
+                </div>
+
+                <div class="item">
+                    <img src="https://placehold.co/400x500/4ecdc4/white?text=Tema+Buah" alt="Worksheet Buah">
+                    <div class="desc">100 Lembar Tema Buah</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="cta-box">
+            <a href="#" class="btn">Beli Semua Sekarang</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

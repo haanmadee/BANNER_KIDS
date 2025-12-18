@@ -1,188 +1,79 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Kids - 3D Showcase</title>
-    <style>
-        :root {
-            --navy: #18375d;
-            --cream: #fdfbf7;
-            --accent: #f4d03f;
-        }
+<div id="flip-container" class="flip-wrapper">
+  
+  <a href="https://lynk.id/ajengwahys/xkWR5mp" target="_blank" rel="noopener noreferrer" class="flip-card front">
+    <img src="https://cdn.lynkid.my.id/draft-products/18-12-2025/1766060015072_3450441.png" alt="Remote Worker Promo">
+  </a>
 
-        body {
-            margin: 0;
-            background-color: var(--cream);
-            font-family: 'Segoe UI', sans-serif;
-            overflow-x: hidden;
-            color: var(--navy);
-        }
+  <a href="https://lynk.id/ajengwahys/Pgvo0VN" target="_blank" rel="noopener noreferrer" class="flip-card back">
+    <img src="https://cdn.lynkid.my.id/draft-products/18-12-2025/1766060083430_6102547.png" alt="Sharing Session Promo">
+  </a>
 
-        /* Hero Container */
-        .hero-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 20px;
-        }
+</div>
 
-        .header-text {
-            margin-bottom: 50px;
-            z-index: 10;
-        }
+<style>
+  .flip-wrapper {
+    position: relative;
+    width: 100%;
+    /* Grid membuat tumpukan gambar tetap punya tinggi yang proporsional */
+    display: grid;
+    grid-template-areas: "stack";
+    perspective: 1000px; /* Memberi kesan kedalaman 3D */
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+  }
 
-        .header-text h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
+  .flip-card {
+    grid-area: stack; /* Menumpuk kedua gambar di tempat yang sama */
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1); /* Kecepatan animasi flip */
+    backface-visibility: hidden; /* Menyembunyikan sisi belakang gambar saat memutar */
+    transform-style: preserve-3d;
+    display: block;
+    cursor: pointer; /* Menambahkan icon jari saat di-hover */
+  }
 
-        /* --- STAGE 3D --- */
-        .stage {
-            width: 250px;
-            height: 350px;
-            perspective: 1200px; /* Memberi efek kedalaman */
-            position: relative;
-        }
+  .flip-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+  }
 
-        /* Kontainer yang Berputar */
-        .carousel {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            transform-style: preserve-3d;
-            animation: rotateCarousel 15s infinite linear; /* Efek Muter Otomatis */
-        }
+  /* --- Posisi Awal --- */
+  .flip-card.front {
+    transform: rotateY(0deg);
+    z-index: 2; /* Depan lebih tinggi prioritas kliknya */
+  }
 
-        /* Style Setiap Kartu/Gambar Produk */
-        .item {
-            position: absolute;
-            width: 220px;
-            height: 300px;
-            left: 15px;
-            top: 25px;
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(24, 55, 93, 0.2);
-            display: flex;
-            flex-direction: column;
-            border: 2px solid white;
-            backface-visibility: visible;
-        }
+  .flip-card.back {
+    transform: rotateY(180deg);
+    z-index: 1;
+  }
 
-        .item img {
-            width: 100%;
-            height: 70%;
-            object-fit: cover;
-        }
+  /* --- Posisi Saat Class 'flipped' Aktif (Gambar 2 Muncul) --- */
+  .flip-wrapper.flipped .flip-card.front {
+    transform: rotateY(-180deg);
+    z-index: 1; /* Turunkan prioritas agar tidak menghalangi klik */
+  }
 
-        .item .desc {
-            padding: 10px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            background: white;
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+  .flip-wrapper.flipped .flip-card.back {
+    transform: rotateY(0deg);
+    z-index: 2; /* Naikkan prioritas agar BISA DIKLIK */
+  }
+</style>
 
-        /* --- POSISI 3D (Melingkar) --- 
-           Kita punya 5 item, jadi 360/5 = 72 derajat per item
-           translateZ menentukan seberapa jauh kartu dari pusat putaran
-        */
-        .item:nth-child(1) { transform: rotateY(0deg) translateZ(250px); }
-        .item:nth-child(2) { transform: rotateY(72deg) translateZ(250px); }
-        .item:nth-child(3) { transform: rotateY(144deg) translateZ(250px); }
-        .item:nth-child(4) { transform: rotateY(216deg) translateZ(250px); }
-        .item:nth-child(5) { transform: rotateY(288deg) translateZ(250px); }
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const container = document.getElementById('flip-container');
+    
+    // Fungsi untuk membolak-balik class 'flipped'
+    function toggleFlip() {
+      container.classList.toggle('flipped');
+    }
 
-        /* Animasi Putar */
-        @keyframes rotateCarousel {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
-        }
-
-        /* Button CTA */
-        .cta-box {
-            margin-top: 60px;
-        }
-
-        .btn {
-            background: var(--navy);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            box-shadow: 0 10px 20px rgba(24, 55, 93, 0.3);
-        }
-
-        /* Efek Hover: Berhenti muter kalau disentuh */
-        .stage:hover .carousel {
-            animation-play-state: paused;
-        }
-
-        /* Responsive Mobile */
-        @media (max-width: 480px) {
-            .stage {
-                transform: scale(0.8); /* Kecilin dikit buat layar mungil */
-            }
-            .header-text h1 {
-                font-size: 1.6rem;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="hero-container">
-        
-        <div class="header-text">
-            <h1>Koleksi Belajar <span style="color: #18375d; border-bottom: 3px solid #f4d03f;">Si Kecil</span></h1>
-            <p>Sentuh kartu untuk berhenti berputar</p>
-        </div>
-
-        <div class="stage">
-            <div class="carousel">
-                
-                <div class="item">
-                    <img src="https://placehold.co/400x500/18375d/white?text=Poster+Animal" alt="Poster Animal">
-                    <div class="desc">6 Poster Animal Aesthetic</div>
-                </div>
-
-                <div class="item">
-                    <img src="https://placehold.co/400x500/f4d03f/18375d?text=Flashcards" alt="Flashcards">
-                    <div class="desc">26 Kartu Huruf Alphabet</div>
-                </div>
-
-                <div class="item">
-                    <img src="https://placehold.co/400x500/e3effd/18375d?text=Worksheet" alt="Worksheet">
-                    <div class="desc">1300+ Hal Worksheet Cerdas</div>
-                </div>
-
-                <div class="item">
-                    <img src="https://placehold.co/400x500/ff6b6b/white?text=Angka+1-10" alt="Flashcards Angka">
-                    <div class="desc">Kartu Angka 1-10 Estetik</div>
-                </div>
-
-                <div class="item">
-                    <img src="https://placehold.co/400x500/4ecdc4/white?text=Tema+Buah" alt="Worksheet Buah">
-                    <div class="desc">100 Lembar Tema Buah</div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="cta-box">
-            <a href="#" class="btn">Beli Semua Sekarang</a>
-        </div>
-
-    </div>
-
-</body>
-</html>
+    // Jalankan setiap 5 detik (5000ms)
+    setInterval(toggleFlip, 5000);
+  });
+</script>
